@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Para Vanesa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f8e8e4; --ink:#4a1220; --accent:#a3213f; --paper:#fffaf4;
+  --env:#c94a63; --env-dark:#a43551; --line:#e9c9c9;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){ --bg:#26090f; --ink:#f7e0e0; --accent:#ff93a9; --paper:#38131e; --env:#8f2b46; --env-dark:#6d1f35; --line:#5a2231; }
+}
+:root[data-theme="dark"]{ --bg:#26090f; --ink:#f7e0e0; --accent:#ff93a9; --paper:#38131e; --env:#8f2b46; --env-dark:#6d1f35; --line:#5a2231; }
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:border-box}
+body{
+  margin:0;min-height:100%;background:var(--bg);color:var(--ink);
+  font-family:'Cormorant Garamond',Georgia,'Times New Roman',serif;
+  display:flex;align-items:center;justify-content:center;padding:24px 20px;
+}
+main{width:100%;max-width:440px;text-align:center}
+.hint{font-size:1.25rem;font-style:italic;margin:0 0 20px;color:var(--accent)}
+.env{
+  all:unset;cursor:pointer;display:block;position:relative;width:min(300px,82vw);aspect-ratio:3/2;margin:0 auto;
+  background:var(--env);border-radius:6px;box-shadow:0 14px 30px rgba(74,18,32,.28);
+  transition:opacity .5s ease, transform .5s ease;
+}
+.env:focus-visible{outline:3px solid var(--accent);outline-offset:6px}
+.env::before{ /* bolsillo inferior */
+  content:"";position:absolute;inset:0;border-radius:6px;background:var(--env-dark);
+  clip-path:polygon(0 100%,0 38%,50% 72%,100% 38%,100% 100%);
+}
+.flap{
+  position:absolute;left:0;right:0;top:0;height:62%;background:var(--env-dark);
+  clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:top;transition:transform .6s ease;
+}
+.seal{
+  position:absolute;left:50%;top:50%;width:46px;height:46px;margin:-30px 0 0 -23px;border-radius:50%;
+  background:var(--paper);color:var(--accent);display:grid;place-items:center;font-size:1.6rem;
+  box-shadow:0 3px 8px rgba(0,0,0,.25);transition:opacity .3s ease;
+}
+.env.open .flap{transform:rotateX(180deg)}
+.env.open .seal{opacity:0}
+.env.gone{opacity:0;transform:translateY(16px);pointer-events:none;position:absolute}
+.letter{
+  display:none;background:var(--paper);border:1px solid var(--line);border-radius:4px;
+  padding:34px 28px 30px;text-align:left;box-shadow:0 14px 34px rgba(74,18,32,.18);
+  opacity:0;transform:translateY(18px);transition:opacity .8s ease, transform .8s ease;
+}
+.letter.show{display:block}
+.letter.in{opacity:1;transform:none}
+h1{font-size:2.3rem;line-height:1.1;margin:0 0 18px;font-weight:600;font-style:italic;color:var(--accent)}
+p{font-size:1.3rem;line-height:1.55;margin:0 0 14px}
+.big{font-size:1.45rem;font-weight:600}
+.sign{margin:22px 0 0;font-style:italic;font-size:1.35rem;text-align:right;color:var(--accent)}
+@media (prefers-reduced-motion:reduce){ *{transition:none!important} }
+</style>
+</head>
+<body>
+<main>
+  <p class="hint" id="hint">Hay algo para ti, Vanesa</p>
+  <button class="env" id="env" aria-label="Abrir la carta">
+    <span class="flap"></span><span class="seal">♥</span>
+  </button>
+
+  <article class="letter" id="letter">
+    <h1>Vanesa, amor mío</h1>
+    <p class="big">Te amo, y quiero que lo sientas con todo lo que soy.</p>
+    <p>Hay lugares que son míos: donde me siento en paz, donde me siento yo, y las cosas que más me gustan en esta vida. Quiero llevarte a conocerlos, caminarlos contigo y verte mirarlos conmigo.</p>
+    <p>Quiero que vengas, que te quedes a mi lado y que descubras mi mundo. Y ojalá, poco a poco, también se vuelva tuyo.</p><p>Porque contigo todo se siente más bonito.</p>
+    <p class="big">Te amo, Vanesa, amor mío, con todo mi corazón.</p>
+    <p class="sign">Juan Carlos ♥</p>
+  </article>
+</main>
+<script>
+(function(){
+  var env=document.getElementById('env'), letter=document.getElementById('letter'), hint=document.getElementById('hint');
+  env.addEventListener('click',function(){
+    env.classList.add('open'); hint.style.visibility='hidden';
+    setTimeout(function(){
+      env.classList.add('gone');
+      letter.classList.add('show');
+      requestAnimationFrame(function(){requestAnimationFrame(function(){letter.classList.add('in');});});
+    },650);
+  });
+})();
+</script>
+</body>
+</html>
